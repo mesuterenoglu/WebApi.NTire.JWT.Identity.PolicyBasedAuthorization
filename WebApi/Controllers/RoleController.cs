@@ -71,9 +71,9 @@ namespace WebApi.Controllers
             return BadRequest(Messages.MissingUserRole);
         }
 
-        [Authorize(Roles = "Admin, CompanyOwner")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> AssignnRoleById([FromBody] AssginRoleModel model)
+        public async Task<IActionResult> AssignnRole([FromBody] AssginRoleModel model)
         {
             if (ModelState.IsValid)
             {

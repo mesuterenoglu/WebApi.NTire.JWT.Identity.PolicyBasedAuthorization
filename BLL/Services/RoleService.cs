@@ -170,7 +170,6 @@ namespace BLL.Services
                 throw new InvalidOperationException(ex.Message);
             }
         }
-
         public async Task<string> AssignRoleByUserIdAsync(string id, string role)
         {
             try

@@ -91,7 +91,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [Authorize(Policy = "SameCompany")]
+        [Authorize(Policy = "SameCompany", Roles = "CompanyOwner")]
         [HttpPut("delete/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -111,7 +111,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [Authorize(Policy = "SameCompany")]
+        [Authorize(Policy = "SameCompany",Roles = "CompanyOwner")]
         [HttpDelete("removefromdb/{id}")]
         public async Task<IActionResult> RemoveFromDb(Guid id)
         {
@@ -206,6 +206,36 @@ namespace WebApi.Controllers
             }
         }
 
+        [Authorize(Policy = "SameCompany",Roles ="CompanyOwner")]
+        [HttpPost("addcompanyuser/{id}")]
+        public async Task<IActionResult> AddCompanyUser(Guid companyId, AddCompanyUserModel model)
+        {
+            try
+            {
+                var resultCompany = await _companyService.AnyAsync(x => x.Id == companyId);
+                if (!resultCompany)
+                {
+                    return BadRequest(Messages.MissingCompanyById);
+                }
+                if (ModelState.IsValid)
+                {
+                    var companyUser = await _companyUserService.GetCompanyUserbyAppUserEmailAsync(model.Email);
+                    if (companyUser == null)
+                    {
+                        return BadRequest(Messages.MissingUserEmail);
+                    }
+                    companyUser.CompanyId = companyId;
+                    await _companyUserService.UpdateAsync(companyUser);
+
+                    return Ok(Messages.Completed);
+                }
+                return BadRequest(model);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(ex.Message);
+            }
+        }
 
     }
 }

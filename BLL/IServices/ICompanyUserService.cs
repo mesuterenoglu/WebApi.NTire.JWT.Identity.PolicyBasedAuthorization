@@ -20,5 +20,6 @@ namespace BLL.IServices
         Task<bool> AnyAsync(Expression<Func<CompanyUser, bool>> filter);
         Task<List<CompanyUserDto>> GetbyFilterAsync(Expression<Func<CompanyUser, bool>> filter);
         Task<CompanyUserDto> GetCompanyUserbyAppUserIdAsync(string appUserId);
+        Task<CompanyUserDto> GetCompanyUserbyAppUserEmailAsync(string appUserEmail);
     }
 }

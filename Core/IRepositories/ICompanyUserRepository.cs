@@ -8,5 +8,6 @@ namespace Core.Interfaces
     public interface ICompanyUserRepository : IRepository<CompanyUser>
     {
         Task<CompanyUser> GetCompanyUserbyAppUserIdAsync(string appUserId);
+        Task<CompanyUser> GetCompanyUserbyAppUserEmailAsync(string appUserEmail);
     }
 }

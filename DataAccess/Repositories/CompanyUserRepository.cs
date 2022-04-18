@@ -14,6 +14,12 @@ namespace DataAccess.Repositories
 
         }
 
+        public async Task<CompanyUser> GetCompanyUserbyAppUserEmailAsync(string appUserEmail)
+        {
+            var companyUser = await _context.CompanyUsers.FirstOrDefaultAsync(x => x.AppUser.Email== appUserEmail);
+            return companyUser;
+        }
+
         public async Task<CompanyUser> GetCompanyUserbyAppUserIdAsync(string appUserId)
         {
             var companyUser = await _context.CompanyUsers.FirstOrDefaultAsync(x => x.AppUserId == appUserId);

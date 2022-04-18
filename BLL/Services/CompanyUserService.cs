@@ -7,7 +7,6 @@ using Core.Entities;
 using System;
 using System.Linq.Expressions;
 using System.Collections.Generic;
-using Common;
 
 namespace BLL.Services
 {
@@ -131,6 +130,20 @@ namespace BLL.Services
             try
             {
                 var companyUser = await _companyUserRepository.GetbyIdAsync(id);
+                var dto = _mapper.Map<CompanyUserDto>(companyUser);
+                return dto;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(ex.Message);
+            }
+        }
+
+        public async Task<CompanyUserDto> GetCompanyUserbyAppUserEmailAsync(string appUserEmail)
+        {
+            try
+            {
+                var companyUser = await _companyUserRepository.GetCompanyUserbyAppUserEmailAsync(appUserEmail);
                 var dto = _mapper.Map<CompanyUserDto>(companyUser);
                 return dto;
             }
